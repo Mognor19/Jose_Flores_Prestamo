@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Caluclo de prestamo{% endblock title %}
+{% block contenido %}
+<div class="row">
+    <div class="col-3">
+        <form action="{% url 'calculo' %}" method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="monto">Monto</label>
+                <input type="number" name="monto" id="monto" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="tasa">Tasa</label>
+                <input type="number" name="tasa" id="tasa" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="plazo">Plazo</label>
+                <input type="number" name="plazo" id="plazo" class="form-control">
+            </div>
+            <div class="mb-3">
+                <input type="submit" class="btn btn-success" value="Calcular">
+            </div>
+        </form>
+    </div>
+    <div class="col-9">
+        <table class="table table-hover">
+        <thead class="">
+            <tr>
+            <th>Monto</th>
+            <th>Tasa</th>
+            <th>Plazo</th>
+            <th>Cuota</th>
+            <th>Total a pagar</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for p in diccionario%} 
+            <tr>
+            <th>{{p.monto}}</th>
+            <th>{{p.tasa}}</th>
+            <th>{{p.plazo}}</th>
+            <th>{{p.cuota}}</th>
+            <th>{{p.total_a_pagar}}</th>
+        {% empty %}
+            <tr>
+            <td colspan="4" class="text-danger text-center">No se encontraron resultados</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        </table>
+    </div>
+</div>
+{% endblock contenido %}
